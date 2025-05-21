@@ -1,0 +1,21 @@
+/* Background image classes for carousel items */
+
+.bg-image-it {
+    background-image: url('IT.jpg');
+}
+
+.bg-image-ba {
+    background-image: url('BA.jpg');
+}
+
+.bg-image-hm {
+    background-image: url('HM.jpg');
+}
+
+.bg-image-ca {
+    background-image: url('CA.jpg');
+}
+
+.bg-image-ed {
+    background-image: url('ED.jpg');
+}

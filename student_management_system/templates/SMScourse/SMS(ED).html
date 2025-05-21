@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Louis Anne Colleges</title>
+    {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/Css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/responsive.css' %}">
+
+
+</head>
+
+<body>
+
+    <!-----sidebar------------->
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up" ></i>
+    </button>
+
+    <div class="wrapper">
+<aside id="sidebar" class="js-sidebar">
+    <div class="h-100">
+        <div class="sidebar-logo">
+            <!----<a href="#"><h2>SLAC</h2></a>--->
+        </div>
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'student_dashboard' %}" class="sidebar-link">
+                            <i class="fa-solid fa-list pe-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-solid fa-book-open"></i>
+                            Department
+                        </a>
+                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{% url 'SMS_it' %}" class="sidebar-link" alt="College of Computer Studies">College  of Computer Studies</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{% url 'SMS_ba' %}" class="sidebar-link">College  of Business Administration</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{% url 'SMS_hm' %}" class="sidebar-link">College  of Hospitality Management</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{% url 'SMS_a' %}" class="sidebar-link">College  of Accountancy</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{% url 'SMS_ed' %}" class="sidebar-link">College of Education </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+<a href="{% url 'SMS_grade' %}" class="sidebar-link"><i class="fa-solid fa-sliders pe-2"></i>Grades</a>
+                    </li>
+
+
+                    <li class="sidebar-item">
+
+                            {% if student and student.id %}
+                                <a href="{% url 'student_subjects' student_id=student.id %}" class="sidebar-link">
+                                    <i class="fa-solid fa-book"></i>
+                                    Subjects
+                                </a>
+                            {% else %}
+
+                            {% endif %}
+
+                    </li>
+                   <!---<li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
+                            Sudent
+                        </a>
+
+                    </li>--->
+
+                    <!-- Removed the Setting sidebar menu block -->
+
+                </ul>
+            </div>
+        </aside>
+
+        <!----------nav-------------->
+
+         <nav class="main">
+<nav class="navbar navbar-expand px-3 border-bottom justify-content-center fixed-top">
+    <button class="btn" id="sidebar-toggle" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+<div class="navbar-brand-text d-flex align-items-center gap-2 justify-content-center w-100">
+    <img src="{% static 'CS/BGBG2.jpeg' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+    <h1 class="m-0"> St. Louis Anne Colleges of San Pedro, Laguna</h1>
+</div>
+
+    <div class="navbar-collapse navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+<a href="#" class="nav-icon pe-md-0 margin-top-10" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:10px;">
+                    {% if student and student.profile_pic %}
+                        <img src="{{ student.profile_pic.url }}" alt="Profile Picture" class="avatar img-fluid rounded-circle profile-pic-style">
+                    {% else %}
+                        <i class="fa-solid fa-user avatar img-fluid rounded-circle profile-pic-style"></i>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'student_profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account' %}">Account</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div id="collegeCarousel" class="carousel slide" data-bs-ride="carousel">
+    
+    <div class="carousel-inner">
+
+        <div class="carousel-item active bg-image-SMSED">
+            <div class="values d-flex justify-content-center">
+                <div class="box text-center">
+
+                    <h4 class="custom-margin">St. Louis Anne Colleges of San Pedro, Laguna </h4>
+                    <p class="custom-margin text-shadow-black" >Inspiring future generations through quality education.</p>
+
+                </a>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+    
+</div>
+
+
+<!-------IT page-->
+
+<section class="IT">
+    <div class="CS">
+        <h4>BACHELOR OF ELEMENTARY EDUCATION (BEED) </h4>
+        <img src="{% static 'CS/SMSEED.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Elementary Education (BEED) program is designed to prepare students for a rewarding career in teaching young children. This program provides a strong foundation in educational theory, child development, and instructional strategies, equipping future educators with the skills and knowledge necessary to foster a positive learning environment. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum design, classroom management, and assessment techniques. Students gain hands-on experience through field placements, internships, and capstone projects.</p>
+    </div>
+    <div class="AS">
+        <h4> Key Areas of Study: </h4>
+    <p>Child Development and Learning Theories</p>
+        <p> Curriculum Design and Instructional Strategies</p>
+        <p> Classroom Management and Behavior Guidance</p>
+        <p> Assessment and Evaluation Techniques</p>
+           <p> Educational Technology and Digital Learning</p>
+           <p>Diversity and Inclusion in Education</p>
+           <div class="'BS">
+            <h4> Primary Job Role:</h4>
+            <p class="job-description"><span>Elementary School Teacher:</span> Plans, implements, and evaluates instructional activities for young learners, fostering a supportive and engaging classroom environment.</p>
+           <p class="job-description"><span> Curriculum Developer:</span> Designs and develops educational programs and materials that align with learning standards and meet the needs of diverse learners.</p>
+           <p class="job-description"><span> Educational Consultant:</span> Advises schools and educational organizations on best practices, curriculum development, and instructional strategies to enhance student learning.</p>
+            <p class="job-description"><span> Special Education Teacher:</span> Works with students with diverse learning needs, developing individualized education plans (IEPs) and adapting instructional methods to support their success.</p>
+                <p class="job-description"><span>Instructional Coordinator:</span> Oversees school curricula and teaching standards, providing support and training to teachers to improve instructional practices.</p>
+                    <p class="job-description"><span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students.</p>
+                    <p class="job-description"><span>Education Advocate:</span> Works with communities and organizations to promote educational policies and initiatives that support equitable access to quality education for all children.</p>
+                    <p class="job-description"><span> Child Care Director: </span> Manages early childhood education programs, ensuring compliance with regulations and providing a safe, nurturing environment for young children. </p>
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+<!-------IT page-->
+
+<section class="IT">
+    <div class="CS">
+        <h4>BACHELOR OF SECONDARY EDUCATION WITH SPECIALIZATION IN FILIPINO (BSED) </h4>
+        <img src="{% static 'CS/SMSFI.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Secondary Education (BSEd) program with a specialization in Filipino is designed to prepare students for a fulfilling career in teaching the Filipino language and literature at the secondary school level. This program provides a solid foundation in educational theory, language acquisition, and cultural studies, equipping future educators with the skills and knowledge necessary to inspire and engage students in the study of Filipino. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum development, instructional strategies, and assessment techniques. Students gain hands-on experience through teaching internships, field placements, and capstone projects.</p>
+    </div>
+    <div class="AS">
+        <h4> Key Areas of Study: </h4>
+    <p>Filipino Language and Literature</p>
+        <p> Curriculum Development and Instructional Strategies</p>
+        <p> Teaching Methodologies for Language Education</p>
+        <p> Assessment and Evaluation Techniques</p>
+           <p> Educational Technology in Language Teaching</p>
+           <p>Cultural Studies and Filipino Heritage</p>
+           <div class="'BS">
+            <h4> Primary Job Role:</h4>
+            <p class="job-description"><span>Filipino Teacher:</span> Plans, implements, and evaluates instructional activities in Filipino language and literature, fostering a supportive and engaging classroom environment for secondary students.</p>
+           <p class="job-description"><span> Curriculum Developer: </span> Designs and develops educational programs and materials that align with language learning standards and meet the needs of diverse learners in Filipino education.</p>
+           <p class="job-description"><span>Educational Consultant: </span> Advises schools and educational organizations on best practices in language instruction, curriculum development, and teaching strategies for Filipino.</p>
+            <p class="job-description"><span>Language Assessment Specialist: </span> Develops and administers assessments to evaluate students' proficiency in Filipino, providing insights to improve language instruction.</p>
+                <p class="job-description"><span>Instructional Coordinator:</span> Oversees the implementation of Filipino language curricula and teaching standards, providing support and training to teachers to enhance instructional practices.</p>
+                    <p class="job-description"><span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students studying Filipino.</p>
+                    <p class="job-description"><span>Cultural Advocate:</span> Promotes the importance of Filipino language and culture within the educational system and the community, working to enhance appreciation and understanding of Filipino heritage.
+
+</p>
+                    <p class="job-description"><span> Filipino Literature Researcher: </span> Conducts research on Filipino literature and language, contributing to academic knowledge and resources for educators and students. </p>
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+<!-------IT page-->
+
+<section class="IT">
+
+    <div class="CS">
+        <h4>BACHELOR OF SECONDARY EDUCATION WITH SPECIALIZATION IN SCIENCE (BSED) </h4>
+        <img src="{% static 'CS/SMSS.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Secondary Education (BSEd) program with a specialization in Science is designed to prepare students for a rewarding career in teaching science subjects at the secondary school level. This program provides a strong foundation in educational theory, scientific principles, and pedagogical strategies, equipping future educators with the skills and knowledge necessary to inspire and engage students in the study of science. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum development, instructional strategies, and assessment techniques. Students gain hands-on experience through teaching internships, field placements, and capstone projects.</p>
+    </div>
+
+    <div class="AS">
+
+        <h4> Key Areas of Study: </h4>
+
+            <p>Principles of Biology, Chemistry, and Physics</p>
+            <p> Curriculum Development and Instructional Strategies for Science Education</p>
+            <p> Laboratory Techniques and Safety Protocols</p>
+            <p> Assessment and Evaluation in Science Education</p>
+            <p> Educational Technology in Science Teaching</p>
+            <p>Environmental Science and Sustainability</p>
+
+           <div class="'BS">
+
+            <h4> Primary Job Role:</h4>
+
+            <p class="job-description">
+                <span>Science Teacher:</span> Plans, implements, and evaluates instructional activities in various science subjects, fostering a supportive and engaging classroom environment for secondary students.</p>
+
+           <p class="job-description">
+            <span> Curriculum Developer:</span> Designs and develops educational programs and materials that align with science learning standards and meet the needs of diverse learners in science education. </p>
+
+           <p class="job-description">
+            <span> Educational Consultant:</span> Advises schools and educational organizations on best practices in science instruction, curriculum development, and teaching strategies for effective science education.
+        </p>
+
+            <p class="job-description">
+                <span> Laboratory Coordinator:</span> Manages science laboratories, ensuring proper equipment, safety protocols, and effective instructional practices for hands-on learning experiences.
+            </p>
+
+                <p class="job-description">
+                    <span>Instructional Coordinator:</span> Oversees the implementation of science curricula and teaching standards, providing support and training to teachers to enhance instructional practices in science.
+
+</p>
+
+                    <p class="job-description">
+                        <span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students studying science.</p>
+
+                    <p class="job-description">
+                        <span>Science Assessment Specialist:</span> Develops and administers assessments to evaluate students' understanding of scientific concepts, providing insights to improve science instruction.
+
+                    </p>
+
+                    <p class="job-description">
+                        <span>Environmental Educator: </span> Promotes awareness and understanding of environmental issues and sustainability practices within the educational system and the community.</p>
+
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="IT">
+    <div class="CS">
+        <h4>BACHELOR OF SECONDARY EDUCATION WITH SPECIALIZATION IN ENGLISH (BSED) </h4>
+        <img src="{% static 'CS/SMSES.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Secondary Education (BSEd) program with a specialization in English is designed to prepare students for a fulfilling career in teaching English language and literature at the secondary school level. This program provides a strong foundation in educational theory, language acquisition, and literary analysis, equipping future educators with the skills and knowledge necessary to inspire and engage students in the study of English. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum development, instructional strategies, and assessment techniques. Students gain hands-on experience through teaching internships, field placements, and capstone projects.</p>
+    </div>
+    <div class="AS">
+        <h4> Key Areas of Study: </h4>
+    <p>English Language and Linguistics</p>
+        <p> Literature Analysis and Criticism</p>
+        <p> Curriculum Development and Instructional Strategies for English Education</p>
+        <p> Teaching Methodologies for Language Arts</p>
+           <p> Assessment and Evaluation Techniques</p>
+           <p>Educational Technology in English Teaching</p>
+           <div class="'BS">
+            <h4> Primary Job Role:</h4>
+            <p class="job-description"><span>English Teacher:</span> Plans, implements, and evaluates instructional activities in English language and literature, fostering a supportive and engaging classroom environment for secondary students.</p>
+           <p class="job-description"><span> Curriculum Developer: </span> Designs and develops educational programs and materials that align with language learning standards and meet the needs of diverse learners in English education.</p>
+           <p class="job-description"><span>Educational Consultant: </span> Advises schools and educational organizations on best practices in English instruction, curriculum development, and teaching strategies for effective language education.</p>
+            <p class="job-description"><span>Literacy Specialist: </span> Works with students to improve reading and writing skills, providing targeted interventions and support to enhance literacy development.</p>
+                <p class="job-description"><span>Instructional Coordinator:</span> Oversees the implementation of English curricula and teaching standards, providing support and training to teachers to enhance instructional practices in English.</p>
+                    <p class="job-description"><span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students studying English.</p>
+                    <p class="job-description"><span>Assessment Specialist:</span> Develops and administers assessments to evaluate students' proficiency in English, providing insights to improve language instruction.
+
+</p>
+                    <p class="job-description"><span>Creative Writing Instructor: </span> Teaches creative writing techniques and encourages students to express themselves through various forms of writing, fostering a love for literature and storytelling.</p>
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+
+<!--------marthM-->
+
+
+<section class="IT">
+    <div class="CS">
+        <h4>BACHELOR OF SECONDARY EDUCATION WITH SPECIALIZATION IN MATHEMATICS (BSED) </h4>
+        <img src="{% static 'CS/SMSMA.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Secondary Education (BSEd) program with a specialization in Mathematics is designed to prepare students for a rewarding career in teaching mathematics at the secondary school level. This program provides a strong foundation in educational theory, mathematical concepts, and pedagogical strategies, equipping future educators with the skills and knowledge necessary to inspire and engage students in the study of mathematics. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum development, instructional strategies, and assessment techniques. Students gain hands-on experience through teaching internships, field placements, and capstone projects.</p>
+    </div>
+    <div class="AS">
+        <h4> Key Areas of Study: </h4>
+    <p>Foundations of Mathematics and Mathematical Reasoning</p>
+        <p> Algebra, Geometry, and Calculus</p>
+        <p> Curriculum Development and Instructional Strategies for Mathematics Education</p>
+        <p> Assessment and Evaluation Techniques in Mathematics</p>
+           <p> Educational Technology in Mathematics Teaching</p>
+           <p>Problem-Solving and Critical Thinking Skills</p>
+           <div class="'BS">
+            <h4> Primary Job Role:</h4>
+            <p class="job-description"><span>Mathematics Teacher:</span> Plans, implements, and evaluates instructional activities in mathematics, fostering a supportive and engaging classroom environment for secondary students.</p>
+           <p class="job-description"><span> Curriculum Developer: </span> Designs and develops educational programs and materials that align with mathematics learning standards and meet the needs of diverse learners in mathematics education.
+
+</p>
+           <p class="job-description"><span>Educational Consultant: </span> Advises schools and educational organizations on best practices in mathematics instruction, curriculum development, and teaching strategies for effective mathematics education.</p>
+            <p class="job-description"><span>Mathematics Assessment Specialist: </span> Develops and administers assessments to evaluate students' understanding of mathematical concepts, providing insights to improve mathematics instruction.</p>
+                <p class="job-description"><span>Instructional Coordinator:</span>Oversees the implementation of mathematics curricula and teaching standards, providing support and training to teachers to enhance instructional practices in mathematics.
+
+</p>
+                    <p class="job-description"><span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students studying mathematics.</p>
+                    <p class="job-description"><span>Tutoring Program Coordinator:</span> Organizes and manages tutoring programs to provide additional support for students struggling with mathematics, fostering their confidence and skills.
+
+</p>
+                    <p class="job-description"><span>Mathematics Researcher: </span> Conducts research on mathematics education and pedagogy, contributing to academic knowledge and resources for educators and students.</p>
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+
+
+<!--------marthM-->
+
+
+<section class="IT">
+    <div class="CS">
+        <h4>BACHELOR OF SECONDARY EDUCATION WITH SPECIALIZATION IN SOCIAL STUDIES (BSED) </h4>
+        <img src="{% static 'CS/SMSso.jpg' %}" style="border: 2px solid black;">
+        <p>The Bachelor of Secondary Education (BSEd) program with a specialization in Social Studies is designed to prepare students for a fulfilling career in teaching social studies at the secondary school level. This program provides a strong foundation in educational theory, social sciences, and pedagogical strategies, equipping future educators with the skills and knowledge necessary to inspire and engage students in the study of history, geography, economics, and civics. Emphasizing both theoretical understanding and practical application, the curriculum covers areas such as curriculum development, instructional strategies, and assessment techniques. Students gain hands-on experience through teaching internships, field placements, and capstone projects.</p>
+    </div>
+    <div class="AS">
+        <h4> Key Areas of Study: </h4>
+    <p>Foundations of Social Studies and Social Science Research</p>
+        <p> History, Geography, and Cultural Studies</p>
+        <p> Economics and Political Science</p>
+        <p> Curriculum Development and Instructional Strategies for Social Studies Education</p>
+           <p> Assessment and Evaluation Techniques in Social Studies</p>
+           <p>Educational Technology in Social Studies Teaching</p>
+           <div class="'BS">
+            <h4> Primary Job Role:</h4>
+            <p class="job-description"><span> Social Studies Teacher:</span> Plans, implements, and evaluates instructional activities in social studies, fostering a supportive and engaging classroom environment for secondary students.</p>
+           <p class="job-description"><span> Curriculum Developer: </span> Designs and develops educational programs and materials that align with social studies learning standards and meet the needs of diverse learners in social studies education.
+
+</p>
+           <p class="job-description"> <span>Educational Consultant: </span> Advises schools and educational organizations on best practices in social studies instruction, curriculum development, and teaching strategies for effective social studies education.</p>
+            <p class="job-description"><span>Social Studies Assessment Specialist: </span> Develops and administers assessments to evaluate students' understanding of social studies concepts, providing insights to improve instruction.</p>
+                <p class="job-description"><span>Instructional Coordinator:</span>Oversees the implementation of social studies curricula and teaching standards, providing support and training to teachers to enhance instructional practices in social studies.
+
+</p>
+                    <p class="job-description"><span> School Administrator:</span> Manages school operations, including staff supervision, budgeting, and policy implementation, ensuring a conducive learning environment for students studying social studies.</p>
+                    <p class="job-description"><span>Civic Engagement Coordinator:</span> Promotes civic education and engagement among students, encouraging participation in community service and understanding of democratic processes.
+
+</p>
+                    <p class="job-description"><span>Social Studies Researcher: </span> Conducts research on social studies education and pedagogy, contributing to academic knowledge and resources for educators and students.</p>
+                    </p>
+           </p>
+        </div>
+    </div>
+</section>
+
+</nav>
+
+    <script>
+        // Scroll to top button functionality
+        var scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'flex';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+    <script src="{% static 'CS/sidebar-toggle-v2.js' %}"></script>
+
+</body>
+</html>

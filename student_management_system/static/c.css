@@ -1,0 +1,83 @@
+.bg-image-SMSIT,
+.bg-image-SMSBA,
+.bg-image-SMSHM,
+.bg-image-SMSA,
+.bg-image-SMSED {
+    height: 200px;
+    width: 100%;
+    display: flex;
+    margin-left: 2px;
+    margin-right: auto;
+    border: 2px solid black;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.CS img {
+height: 200px;
+width: auto;
+display: block;
+margin-left: auto;
+margin-right: auto;
+border: 2px solid black;
+margin-top: -0%;
+}
+
+section.IT h4 {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    margin-top: -130%;
+}
+
+.IT .CS p {
+    font-size: 10px;
+    line-height: 1.5;
+    margin-bottom: 1em;
+    margin-top: 10%;
+    margin-left: -18px;
+    margin-right: -18px;
+}
+
+section.IT p {
+    font-size: 6px;
+    line-height: 1.5;
+    margin-bottom: 1em;
+    margin-top: 40%;
+}
+
+.job-description span {
+    font-size: 8px;
+    margin-left: -18px;
+    margin-right: -18px;
+}
+
+p, .job-description {
+        font-size: 10px; /* Smaller font size for paragraphs */
+        margin-left: -18px;
+    margin-right: -18px;
+    }
+
+.BS h4 {
+
+    margin-top: 60%;
+}
+
+section .AS h4 {
+    font-size: 10px;
+    line-height: 1.5;
+    margin-bottom: 10%;
+    margin-top: 10%;
+}
+
+section .AS p {
+    font-size: 8px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-top: 10%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: -50px;
+
+}

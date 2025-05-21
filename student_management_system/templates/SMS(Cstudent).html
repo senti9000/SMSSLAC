@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Louis Anne Colleges</title>
+    {% load static %}
+    {% load custom_filters %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/Css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/responsive.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-----sidebar------------->
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up" ></i>
+    </button>
+
+    <div class="wrapper">
+        <aside id="sidebar" class="js-sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <!----<a href="#"><h2>SLAC</h2></a>--->
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMScourse' %}" class="sidebar-link">
+                            <i class="fa-solid fa-note-sticky"></i>
+                            Add Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMS-course-save' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-note-sticky"></i>
+                            View Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSsubject' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-book"></i>
+                            Add Subject
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSsubjectsave' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-book"></i>
+                            View Subject
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSstudent' %}" class="sidebar-link collapsed"
+                            aria-expanded="false"><i class="fa-solid fa-user-tie"></i>
+                            Add Student
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'add_student_save' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-user-tie"></i>
+                            View Student
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'admin:index' %}" class="sidebar-link">
+                           <i class="fa-solid fa-user-secret"></i>
+                            Admin
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#Setting" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>
+                            Setting
+                        </a>
+                        <ul id="Setting" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+
+                            <li class="sidebar-item">
+                                <div class="text-right mb-3">
+                                    <a href="{% url 'logout' %}" class="sidebar-link" aria-expanded="false">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!----------nav-------------->
+
+        <nav class="main">
+<nav class="navbar navbar-expand px-3 border-bottom justify-content-center fixed-top">
+    <button class="btn" id="sidebar-toggle" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+<div class="navbar-brand-text d-flex align-items-center gap-2 justify-content-center w-100">
+    <img src="{% static 'CS/BGBG2.jpeg' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+    <h1 class="m-0"> St. Louis Anne Colleges of San Pedro, Laguna</h1>
+</div>
+
+    <div class="navbar-collapse navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+            
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+            
+
+            <div class="card">
+                <!----<div class="card-header">
+                    Featured Student
+                </div>--->
+<div class="card-body">
+    <div class="text-center mb-3">
+        {% if student.profile_pic %}
+            <img src="{{ student.profile_pic.url }}" alt="Profile Picture" class="rounded" style="max-width: 150px; max-height: 150px; object-fit: cover; border-radius: 5px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-url="{{ student.profile_pic.url }}" />
+        {% else %}
+            <p>No profile picture available.</p>
+        {% endif %}
+    </div>
+
+    <div class="accordion" id="studentProfileAccordion">
+
+        <!-- Personal Information -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPersonal">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="true" aria-controls="collapsePersonal">
+                    Personal Information
+                </button>
+            </h2>
+            <div id="collapsePersonal" class="accordion-collapse collapse show" aria-labelledby="headingPersonal" data-bs-parent="#studentProfileAccordion" >
+                <div class="accordion-body text-start">
+                    <p><strong>Student Name:</strong> {{ student.last_name }}, {{ student.middle_Name }} {{ student.first_name }}</p>
+                    <p><strong>Student ID:</strong> {{ student.student_number }}</p>
+                    <p><strong>Department:</strong> {{ student.department_name }}</p>
+                    <p><strong>Year Level:</strong> {{ student.year_level }}</p>
+                    <p><strong>Course:</strong> {{ student.course.name }}</p>
+                    <p><strong>Place of Birth:</strong> {{ student.place_of_birth }}</p>
+                    <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                    <p><strong>Gender:</strong> {{ student.gender }}</p>
+                    <p><strong>Address:</strong> {{ student.address }}</p>
+                    <p><strong>Phone:</strong> {{ student.phone }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDocuments">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDocuments" aria-expanded="false" aria-controls="collapseDocuments" >
+                    Documents
+                </button>
+            </h2>
+            <div id="collapseDocuments" class="accordion-collapse collapse" aria-labelledby="headingDocuments" data-bs-parent="#studentProfileAccordion">
+                <div class="accordion-body text-start">
+                    {% for doc_label, doc_field in documents %}
+                        <p><strong>{{ doc_label }}:</strong></p>
+                        {% if doc_field %}
+                            <img src="{{ doc_field.url }}" alt="{{ doc_label }} Document" class="img-thumbnail document-thumb" style="max-width: 150px; max-height: 150px; object-fit: cover; border-radius: 5px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-url="{{ doc_field.url }}" />
+                        {% else %}
+                            <p>{{ doc_label }}: No file available.</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Family Information -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFamily">
+                <button class="accordion-button collapsed"  type="button" data-bs-toggle="collapse" data-bs-target="#collapseFamily" aria-expanded="false" aria-controls="collapseFamily">
+                    Family Information
+                </button>
+            </h2>
+            <div id="collapseFamily" class="accordion-collapse collapse" aria-labelledby="headingFamily" data-bs-parent="#studentProfileAccordion">
+                <div class="accordion-body text-start">
+                    <p><strong>Father's Name:</strong> {{ student.father_name }}</p>
+                    <p><strong>Mother's Name:</strong> {{ student.mother_name }}</p>
+                    <p><strong>Guardian Contact Number:</strong> {{ student.guardian_contact_number }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Information -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingAcademic">
+                <button class="accordion-button collapsed" type="button"  data-bs-toggle="collapse" data-bs-target="#collapseAcademic" aria-expanded="false" aria-controls="collapseAcademic">
+                    Academic Information
+                </button>
+            </h2>
+            <div id="collapseAcademic" class="accordion-collapse collapse" aria-labelledby="headingAcademic" data-bs-parent="#studentProfileAccordion">
+                <div class="accordion-body text-start">
+                    <p><strong>Student Type:</strong> {{ student.student_type }}</p>
+                    <p><strong>School Name:</strong> {{ student.school_name }}</p>
+                    <p><strong>Student Status:</strong> {{ student.student_status }}</p>
+                    <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
+                    <p><strong>Status:</strong> {{ student.status }}</p>
+                    <p><strong>Academic Year:</strong> {{ student.academic_year }}</p>
+                    <p><strong>Semester:</strong> {{ student.semester }}</p>
+                    <p><strong>Elementary Name & Year Graduated:</strong> {{ student.elementary_name_year_graduated }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'student_list' %}" class="btn btn-sm btn-primary">Back to Student List</a>
+        <a href="{% url 'edit_student' student.id %}" class="btn btn-sm btn-warning">Edit Student</a>
+        {% if student.id %}
+            <form action="{% url 'delete_student' student.id %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Document Image" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script to update modal image src on thumbnail click
+        var imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var imgUrl = button.getAttribute('data-img-url');
+            var modalImage = document.getElementById('modalImage');
+            modalImage.src = imgUrl;
+        });
+    </script>
+</div>
+            </div>
+            
+            <script>
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                
+                const csrftoken = getCookie('csrftoken');
+                
+                $.ajaxSetup({
+                    beforeSend: function(xhr, settings) {
+                        if (!(/^GET|HEAD|OPTIONS|TRACE$/i.test(settings.type)) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+                
+                $(document).ready(function() {
+    // Initialize modal with current grade data
+        $('.edit-grade-btn').click(function() {
+            const studentId = $(this).data('student-id');
+            const subjectId = $(this).data('subject-id');
+            const currentGrade = $(this).data('current-grade');
+            let currentSemester = $(this).data('current-semester');
+            let currentYear = $(this).data('current-year');
+            const currentYearLevel = $(this).data('year-level');
+
+            // Replace invalid "-" or empty values with empty string for semester and year
+            if (!currentSemester || currentSemester === '-' || currentSemester === 'undefined') {
+                currentSemester = '{{ student.semester }}';
+            }
+            if (!currentYear || currentYear === '-' || currentYear === 'undefined') {
+                // Set currentYear to student's academic year if empty or "-"
+                currentYear = '{{ student.academic_year }}';
+            }
+
+            $('#editStudentId').val(studentId);
+            $('#editSubjectId').val(subjectId);
+            $('#editGradeValue').val(currentGrade || '');
+            $('#editSemester').val(currentSemester);
+            $('#editAcademicYear').val(currentYear);
+            $('#editYearlevel').val(currentYearLevel || '');
+
+            $('#editGradeModal').modal('show');
+        });
+
+    // Handle form submission
+    $('#gradeEditForm').submit(function(e) {
+        e.preventDefault();
+
+        const formData = $(this).serialize();
+        const studentId = $('#editStudentId').val();
+        const subjectId = $('#editSubjectId').val();
+
+        $.ajax({
+            url: "{% url 'edit_grade_ajax' %}",
+            type: "POST",
+            data: formData,
+                    success: function(response) {
+                if(response.success) {
+                    // Update the table row using data attributes
+                    const row = $(`tr[data-student-id="${studentId}"][data-subject-id="${subjectId}"]`);
+                    const oldYearLevel = row.find('td:nth-child(3)').text();
+                    const oldSemester = row.find('td:nth-child(4)').text();
+
+                    row.find('td:nth-child(2)').text(response.grade_value || '-');
+                    row.find('td:nth-child(3)').text(response.year_level || '-');
+                    row.find('td:nth-child(4)').text(response.semester || '-');
+                    row.find('td:nth-child(5)').text(response.academic_year || '-');
+
+                    // Update the status cell in the subject list if present
+                    // Find the subject list item with matching subject id
+                    const subjectListItem = $(`ul.list-group li[data-subject-id="${subjectId}"]`);
+                    if (subjectListItem.length) {
+                        // Update the status text inside the card-text paragraph
+                        const statusElement = subjectListItem.find('p.card-text strong:contains("Status:")').parent();
+                        if (statusElement.length) {
+                            statusElement.html(`<strong>Status:</strong> ${response.status || 'N/A'}`);
+                        }
+                    }
+
+                    // Move the row to the correct year level and semester group if changed
+                    const newYearLevel = response.year_level || '-';
+                    const newSemester = response.semester || '-';
+
+                    if (oldYearLevel !== newYearLevel || oldSemester !== newSemester) {
+                        // Find the year level header row
+                        let yearLevelHeader = null;
+                        $('table.table tbody tr').each(function() {
+                            if ($(this).text().trim() === `Year Level: ${newYearLevel}`) {
+                                yearLevelHeader = $(this);
+                                return false; // break loop
+                            }
+                        });
+
+                        // Find the semester header row under the year level
+                        let semesterHeader = null;
+                        if (yearLevelHeader) {
+                            let next = yearLevelHeader.next();
+                            while (next.length && !next.text().trim().startsWith('Semester Offered:') && !next.text().trim().startsWith('Year Level:')) {
+                                if (next.text().trim() === `Semester Offered: ${newSemester}`) {
+                                    semesterHeader = next;
+                                    break;
+                                }
+                                next = next.next();
+                            }
+                        }
+
+                        if (semesterHeader) {
+                            // Insert after the last row of this semester group
+                            let insertAfter = semesterHeader;
+                            let next = semesterHeader.next();
+                            while (next.length && !next.text().trim().startsWith('Semester Offered:') && !next.text().trim().startsWith('Year Level:')) {
+                                insertAfter = next;
+                                next = next.next();
+                            }
+                            row.insertAfter(insertAfter);
+                        } else if (yearLevelHeader) {
+                            // Insert after year level header if semester header not found
+                            row.insertAfter(yearLevelHeader);
+                        } else {
+                            // Append at the end if no matching group found
+                            $('table.table tbody').append(row);
+                        }
+                    }
+
+                    $('#editGradeModal').modal('hide');
+                    // Show inline success message
+                    $('#gradeEditSuccess').text('Grade updated successfully!').show().delay(3000).fadeOut();
+                } else {
+                    $('#gradeEditError').text('Error: ' + response.error).show().delay(3000).fadeOut();
+                }
+            },
+            error: function() {
+                $('#gradeEditError').text('An error occurred while saving the grade.').show().delay(3000).fadeOut();
+            }
+        });
+    });
+
+
+                    // Update semester cell in the table row
+                    $('#gradeEditForm').on('ajax:success', function(event) {
+                        const response = event.detail[0];
+                        if (response.success) {
+                            const studentId = $('#editStudentId').val();
+                            const subjectId = $('#editSubjectId').val();
+                            const row = $(`tr[data-student-id="${studentId}"][data-subject-id="${subjectId}"]`);
+                            row.find('td:nth-child(4)').text($('#editSemester').val() || '-');
+                        }
+                    });
+
+                // Handle Delete Grade button click
+                $('.delete-grade-btn').click(function() {
+                    if (!confirm('Are you sure you want to delete this grade?')) {
+                        return;
+                    }
+                    const studentId = $(this).data('student-id');
+                    const subjectId = $(this).data('subject-id');
+                    const currentSemester = $(this).data('current-semester') || '';
+                    const currentYear = $(this).data('current-year') || '';
+
+                    $.ajax({
+                        url: "{% url 'delete_grade_ajax' %}",
+                        type: "POST",
+                        data: {
+                            'student_id': studentId,
+                            'subject_id': subjectId,
+                            'semester': currentSemester,
+                            'academic_year': currentYear
+                        },
+                        success: function(response) {
+if (response.success) {
+    // Remove the grade row from the table
+    $(`tr[data-student-id="${studentId}"][data-subject-id="${subjectId}"]`).remove();
+    // Show inline success message
+    $('#gradeDeleteSuccess').text('Grade deleted successfully!').show().delay(3000).fadeOut();
+} else {
+    $('#gradeDeleteError').text('Error: ' + response.error).show().delay(3000).fadeOut();
+}
+                        },
+                        error: function() {
+                            $('#gradeDeleteError').text('An error occurred while deleting the grade.').show().delay(3000).fadeOut();
+                        }
+                    });
+                });
+
+                    // New code for Edit Subject button
+                    var changeSubjectModal = new bootstrap.Modal(document.getElementById('changeSubjectModal'));
+
+                    $('.btn-change-subject').click(function() {
+                        const studentId = $(this).data('student-id');
+                        const oldSubjectId = $(this).data('old-subject-id');
+                        const oldSubjectName = $(this).data('old-subject-name');
+
+                        $('#changeSubjectStudentId').val(studentId);
+                        $('#changeSubjectOldSubjectId').val(oldSubjectId);
+                        $('#currentSubjectName').text(oldSubjectName);
+
+                        // Reset the select dropdown
+                        $('#newSubjectSelect').val('');
+
+                        changeSubjectModal.show();
+                    });
+
+                    $('#changeSubjectForm').submit(function(e) {
+                        e.preventDefault();
+
+                        const formData = $(this).serialize();
+
+                        $.ajax({
+                            url: "{% url 'change_subject_ajax' %}",
+                            type: "POST",
+                            data: formData,
+                            success: function(response) {
+                                if (response.success) {
+                                    // Update the subject name in the list item
+                                    const oldSubjectId = response.old_subject_id;
+                                    const newSubjectName = response.new_subject_name;
+                                    const newSubjectId = response.new_subject_id;
+
+                                    // Find the list item with the old subject id and update the name and data attribute
+                                    const listItem = $(`button.btn-change-subject[data-old-subject-id="${oldSubjectId}"]`).closest('li');
+                                    listItem.find('h5.card-title').text(newSubjectName);
+                                    listItem.find('button.btn-change-subject').data('old-subject-id', newSubjectId);
+                                    listItem.find('button.btn-change-subject').data('old-subject-name', newSubjectName);
+
+                                    changeSubjectModal.hide();
+                                    location.reload();
+                                } else {
+                                    alert('Error: ' + response.error);
+                                }
+                            },
+                            error: function() {
+                                alert('An error occurred while changing the subject.');
+                            }
+                        });
+                    });
+
+                    // Handle Add Subject button click
+                    $('.addSubjectBtn').click(function() {
+                    $('#addSubjectError').text('');
+                    $('#addSubjectSuccess').text('');
+                    $('#newSubjectSelect').val('');
+                    $('#addSubjectModal').modal('show');
+                });
+
+
+                            const formData = $(this).serialize();
+
+                            $.ajax({
+                                url: "{% url 'add_student_subject_ajax' %}",
+                                type: "POST",
+                                data: formData,
+                                success: function(response) {
+                                    if (response.success) {
+                                        $('#addSubjectSuccess').text(response.message);
+
+                                        // Dynamically update the Grades table without reloading the page
+                                        const gradesTableBody = $('table.table tbody');
+
+                                        // Build new row HTML for the Grades table
+                                        const newGradeRow = `
+                                            <tr data-student-id="{{ student.id }}" data-subject-id="${response.new_subject_id}">
+                                                <td>${response.new_subject_name}</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-warning edit-grade-btn" 
+                                                            data-student-id="{{ student.id }}"
+                                                            data-subject-id="${response.new_subject_id}"
+                                                            data-current-grade="-"
+                                                            data-current-semester="-"
+                                                            data-current-year="-">
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `;
+
+                                        // Append the new row to the Grades table body
+ // Insert the new row in the correct year level and semester group in the Grades table
+ const yearLevel = $('#addSubjectYearLevelSelect').val();
+ const semester = $('#addSubjectSemesterSelect').val();
+
+                                        // Find the last row of the group for the year level and semester
+                                        let lastGroupRow = null;
+                                        $('table.table tbody tr').each(function() {
+                                            const row = $(this);
+                                            const rowYearLevel = row.prevAll('tr').filter(function() {
+                                                return $(this).text().includes('Year Level: ' + yearLevel);
+                                            }).length > 0 ? yearLevel : null;
+                                            const rowSemester = row.prevAll('tr').filter(function() {
+                                                return $(this).text().includes('Semester Offered: ' + semester);
+                                            }).length > 0 ? semester : null;
+
+                                            if (rowYearLevel === yearLevel && rowSemester === semester) {
+                                                lastGroupRow = row;
+                                            }
+                                        });
+
+                                        if (lastGroupRow) {
+                                            lastGroupRow.after(newGradeRow);
+                                        } else {
+                                            // If group not found, append at the end
+                                            $('table.table tbody').append(newGradeRow);
+                                        }
+
+                                        // Dynamically update the Subjects list in the correct year level and semester group
+                                        // Find the ul element for the year level and semester
+                                        const subjectListSelector = `ul.list-group[data-year-level="${yearLevel}"][data-semester="${semester}"]`;
+                                        const subjectList = $(subjectListSelector);
+
+                                        if (subjectList.length > 0) {
+                                            // Build new subject list item HTML
+                                            const newSubjectItem = `
+                                                <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-subject-id="${response.new_subject_id}">
+                                                    <div>
+                                                        <h5 class="card-title">${response.new_subject_name}</h5>
+                                                        <p class="card-text">
+                                                            <strong>Code:</strong> ${response.subject_code}<br>
+                                                            <strong>Credits:</strong> ${response.credits}<br>
+                                                            <strong>Number of Hours:</strong> ${response.number_of_hours}<br>
+                                                            <strong>Status:</strong> ${response.status}
+                                                        </p>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-primary me-1 btn-change-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-old-subject-id="${response.new_subject_id}"
+                                                                data-old-subject-name="${response.new_subject_name}">
+                                                            Edit Subject
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger btn-remove-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-subject-id="${response.new_subject_id}"
+                                                                onclick="return confirm('Are you sure you want to remove this subject from the student?')">
+                                                            Remove Subject
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            `;
+                                            subjectList.append(newSubjectItem);
+                                        } else {
+                                            // If the ul element does not exist, create the group dynamically
+
+                                            // Find or create the year level header and container
+                                            let yearLevelHeader = $(`h4.mt-3:contains("Year ${yearLevel}")`);
+                                            if (yearLevelHeader.length === 0) {
+                                                // Create year level header and container
+                                                yearLevelHeader = $(`<h4 class="mt-3">Year ${yearLevel}</h4>`);
+                                                $('.card-body').first().append(yearLevelHeader);
+                                            }
+
+                                            // Create semester header and button
+                                            let semesterHeader = $(`h5.mt-2:contains("${semester} Semester")`);
+                                            if (semesterHeader.length === 0) {
+                                                semesterHeader = $(
+                                                    `<div class="d-flex justify-content-between align-items-center">
+                                                        <h5 class="mt-2">${semester} Semester</h5>
+                                                        <button class="btn btn-success btn-sm addSubjectBtn" data-year-level="${yearLevel}" data-semester="${semester}">Add Subject</button>
+                                                    </div>`
+                                                );
+                                                yearLevelHeader.after(semesterHeader);
+                                            }
+
+                                            // Create the UL list group
+                                            const newSubjectList = $(`<ul class="list-group" data-year-level="${yearLevel}" data-semester="${semester}"></ul>`);
+                                            semesterHeader.after(newSubjectList);
+
+                                            // Append the new subject item
+                                            const newSubjectItem = `
+                                                <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-subject-id="${response.new_subject_id}">
+                                                    <div>
+                                                        <h5 class="card-title">${response.new_subject_name}</h5>
+                                                        <p class="card-text">
+                                                            <strong>Code:</strong> ${response.subject_code}<br>
+                                                            <strong>Credits:</strong> ${response.credits}<br>
+                                                            <strong>Number of Hours:</strong> ${response.number_of_hours}<br>
+                                                            <strong>Status:</strong> ${response.status}
+                                                        </p>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-primary me-1 btn-change-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-old-subject-id="${response.new_subject_id}"
+                                                                data-old-subject-name="${response.new_subject_name}">
+                                                            Edit Subject
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger btn-remove-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-subject-id="${response.new_subject_id}"
+                                                                onclick="return confirm('Are you sure you want to remove this subject from the student?')">
+                                                            Remove Subject
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            `;
+                                            newSubjectList.append(newSubjectItem);
+                                        }
+
+                                        // Close the modal after a short delay
+                                        setTimeout(function() {
+                                            $('#addSubjectModal').modal('hide');
+                                            $('#addSubjectSuccess').text('');
+                                        }, 1500);
+
+                                    } else {
+                                        $('#addSubjectError').text(response.error);
+                                    }
+                                },
+                                error: function() {
+                                    $('#addSubjectError').text('An error occurred while adding the subject.');
+                                }
+                            });
+                        });
+
+            
+                
+            </script>
+            
+          <div class="card mt-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>Grades</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                    <!-- <th>Year Level</th> -->
+                    <th>Semester</th>
+                    <th>Academic Year</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if grouped_all_course_subjects %}
+                    {% for year_level, semesters in grouped_all_course_subjects.items %}
+                        <tr>
+                            <td colspan="6" class="font-weight-bold">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div><strong>Year Level: {{ year_level }}</strong></div>
+                                    <div><button class="btn btn-success btn-sm addSubjectBtn">Add Subject</button></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {% for semester_offered, subjects_list in semesters.items %}
+                            <tr>
+                                <td colspan="6" class="font-weight-bold ps-4">
+                                    <strong>Semester Offered: {{ semester_offered }}</strong>
+                                </td>
+                            </tr>
+                            
+                            {% for subject in subjects_list %}
+                                <tr data-student-id="{{ student.id }}" data-subject-id="{{ subject.id }}">
+                                    <td>{{ subject.subject_name }}</td>
+                                    
+                                    <!-- Grade -->
+                                    <td>
+                                        {% with grade=subject_grade_map_all|get_item:subject.id %}
+                                            {{ grade.grade_value|default:"-" }}
+                                        {% endwith %}
+                                    </td>
+                                    
+                                    <!-- Semester -->
+                                    <td>
+                                        {% with grade=subject_grade_map_all|get_item:subject.id %}
+                                            {% if grade and grade.semester %}
+                                                {{ grade.semester|default:"-" }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        {% endwith %}
+                                    </td>
+                                    <!-- Academic Year -->
+                                    <td>
+                                        {% with grade=subject_grade_map_all|get_item:subject.id %}
+                                            {% if grade and grade.academic_year %}
+                                                {{ grade.academic_year|default:"-" }}
+                                            {% else %}
+                                                {% if year_level|stringformat:"s" == student.year_level|stringformat:"s" %}
+                                                    {{ student.academic_year|default:"-" }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endwith %}
+                                    </td>
+                                    
+                                    <!-- Actions -->
+                                    <td>
+                                        {% with grade=subject_grade_map_all|get_item:subject.id %}
+    <button class="btn btn-sm btn-warning edit-grade-btn"
+            data-student-id="{{ student.id }}"
+            data-subject-id="{{ subject.id }}"
+            data-current-grade="{{ grade.grade_value|default:"-" }}"
+            data-current-semester="{{ grade.semester|default:"-" }}"
+            data-current-year="{{ grade.academic_year|default:"-" }}"
+            data-year-level="{{ grade.year_level|default:"1" }}">
+        <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+{% endwith %}
+
+
+                                        <button class="btn btn-sm btn-danger delete-grade-btn" title="Delete this grade only"
+                                                data-student-id="{{ student.id }}"
+                                                data-subject-id="{{ subject.id }}"
+                                                data-current-semester="{% with grade=subject_grade_map_all|get_item:subject.id %}{{ grade.semester|default:'' }}{% endwith %}"
+                                                data-current-year="{% with grade=subject_grade_map_all|get_item:subject.id %}{{ grade.academic_year|default:'' }}{% endwith %}"
+                                                onclick="return confirm('Are you sure you want to delete this grade only? This will not delete the subject.')">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">No grades found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+            
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4>Subjects in this Course: {{ student.course.name }}</h4>
+                    
+                </div>
+            <div class="card-body">
+            {% if grouped_all_course_subjects %}
+                {% for year_level, semesters in grouped_all_course_subjects.items %}
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h4>Year {{ year_level }}</h4>
+                        <button class="btn btn-success btn-sm addSubjectBtn" data-year-level="{{ year_level }}" data-semester="{{ semester_offered }}">Add Subject</button>
+                    </div>
+                    {% for semester_offered, subjects_list in semesters.items %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mt-2">{{ semester_offered }} Semester</h5>
+                            
+                        </div>
+                        <ul class="list-group" data-year-level="{{ year_level }}" data-semester="{{ semester_offered }}">
+                            {% for subject in subjects_list %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-subject-id="{{ subject.id }}">
+                                <div>
+                                    <h5 class="card-title">{{ subject.subject_name }}</h5>
+                                    <p class="card-text">
+                                        <strong>Code:</strong> {{ subject.subject_code }}<br>
+                                        <strong>Credits:</strong> {{ subject.credits }}<br>
+                                        <strong>Lecture Hour:</strong> {{ subject.lecture_hour|default:"N/A" }}<br>
+                                        <strong>Laboratory Hour:</strong> {{ subject.laboratory_hour|default:"N/A" }}<br>
+                                        {% with grade=subject_grade_map_all|get_item:subject.id %}
+                                        <strong>Status:</strong> {{ grade.status|default:"N/A" }}
+                                        {% endwith %}
+                                    </p>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-primary me-1 btn-change-subject"
+                                            data-student-id="{{ student.id }}"
+                                            data-old-subject-id="{{ subject.id }}"
+                                            data-old-subject-name="{{ subject.subject_name }}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger btn-remove-subject"
+                                            data-student-id="{{ student.id }}"
+                                            data-subject-id="{{ subject.id }}"
+                                            onclick="return confirm('Are you sure you want to remove this subject from the student?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    No subjects found for this course.
+                    {% if request.user.is_staff %}
+                <!--<a href="{% url 'SMSsubject' %}" class="alert-link">Add subjects</a>-->
+                    {% endif %}
+                </div>
+            {% endif %}
+                </div>
+            </div>
+
+            <!-- Removed Subjects Section -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h4>Removed Subjects</h4>
+                </div>
+                <div class="card-body">
+                    {% if removed_grades %}
+                        <ul class="list-group">
+                            {% for grade in removed_grades %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">{{ grade.subject.subject_name }}</h5>
+<p class="card-text">
+    <strong>Code:</strong> {{ grade.subject.subject_code }}<br>
+    <strong>Credits:</strong> {{ grade.subject.credits }}<br>
+    <strong>Lecture Hour:</strong> {{ grade.subject.lecture_hour|default:"N/A" }}<br>
+    <strong>Laboratory Hour:</strong> {{ grade.subject.laboratory_hour|default:"N/A" }}<br>
+    <strong>Status:</strong> {{ grade.subject.status|default:"N/A" }}
+</p>
+                                    </div>
+                                    <div class="btn-group">
+                                    <button class="btn btn-sm btn-success btn-restore-subject"
+                                            data-student-id="{{ student.id }}"
+                                            data-subject-id="{{ grade.subject.id }}">
+                                        Restore Subject
+                                    </button>
+<button class="btn btn-sm btn-danger btn-delete-subject" title="Permanently delete this removed grade record only, not the subject"
+                                            data-student-id="{{ student.id }}"
+                                            data-subject-id="{{ grade.subject.id }}"
+                                            {% if not removed_grades %}
+                                                disabled
+                                            {% endif %}
+                                            onclick="return confirm('Are you sure you want to permanently delete this removed grade record only? This will not delete the subject.')">
+                                        Delete Removed Grade
+                                    </button>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No removed subjects.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                // Add Remove Subject button handler
+                $('.btn-remove-subject').click(function(e) {
+                    e.preventDefault(); // Prevent the default form submission behavior
+                    if (!confirm('Are you sure you want to remove this subject from the student?')) {
+                        return; // Exit if the user cancels the confirmation
+                    }
+                    const studentId = $(this).data('student-id'); // Get the student ID from the button's data attribute
+                    const subjectId = $(this).data('subject-id'); // Get the subject ID from the button's data attribute
+                    const csrftoken = getCookie('csrftoken'); // Get the CSRF token for security
+        
+                    // Send an AJAX request to remove the subject
+                    $.ajax({
+                        url: "{% url 'remove_student_subject_ajax' %}", // Fixed URL for soft delete AJAX request
+                        type: "POST", // HTTP method
+                        headers: {'X-CSRFToken': csrftoken}, // Set the CSRF token in the request headers
+                        data: {
+                            'student_id': studentId, // Data to send with the request
+                            'subject_id': subjectId
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                alert(response.message); // Show success message
+                                // Remove the subject from the DOM
+                                $(`button.btn-remove-subject[data-subject-id="${subjectId}"]`).closest('li').remove();
+                            } else {
+                                alert('Error: ' + response.error); // Show error message
+                            }
+                        },
+                        error: function() {
+                            alert('An error occurred while removing the subject.'); // Handle AJAX error
+                        }
+                    });
+                });
+        
+                // Function to get CSRF token cookie
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break; // Exit loop once the cookie is found
+                            }
+                        }
+                    }
+                    return cookieValue; // Return the cookie value
+                }
+            });
+        </script>
+        
+      <!-------- Change Subject Modal ---> 
+<div class="modal fade" id="changeSubjectModal" tabindex="-1" aria-labelledby="editSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="changeSubjectForm">
+                <input type="hidden" id="changeSubjectStudentId" name="student_id" />
+                <input type="hidden" id="changeSubjectOldSubjectId" name="subject_id" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSubjectModalLabel">Edit Subject Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="newSubjectStatusSelect" class="form-label">Select Subject Status</label>
+                        <select class="form-select" id="newSubjectStatusSelect" name="new_subject_status" required>
+                            <option value="" selected disabled>Select status</option>
+                            <option value="Currently Taking">Currently Taking</option>
+                            <option value="Drop">Drop</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#changeSubjectForm').submit(function(e) {
+            e.preventDefault();
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: "{% url 'update_subject_status_ajax' %}",
+                type: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Subject status updated successfully.');
+                        $('#changeSubjectModal').modal('hide');
+                        location.reload();
+                    } else {
+                        alert('Error: ' + response.error);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while updating the subject status.');
+                }
+            });
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#deleteGradeBtn').click(function() {
+                if (!confirm('Are you sure you want to delete this grade?')) {
+                    return;
+                }
+                const studentId = $('#editStudentId').val();
+                const subjectId = $('#editSubjectId').val();
+                const csrftoken = getCookie('csrftoken');
+
+                $.ajax({
+                url: "{% url 'delete_removed_subject_ajax' %}",
+                    type: "POST",
+                    headers: {'X-CSRFToken': csrftoken},
+                    data: {
+                        'student_id': studentId,
+                        'subject_id': subjectId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $('#editGradeModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while deleting the grade.');
+                    }
+                });
+            });
+
+            // Function to get CSRF token cookie
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+
+    <!---<script  src="{% static 'CS/jjss.js' %}"></script>>-->
+
+    <!-- Edit Grade Modal -->
+    <div class="modal fade" id="editGradeModal" tabindex="-1" aria-labelledby="editGradeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="gradeEditForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editGradeModalLabel">Edit Grade</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editStudentId" name="student_id" />
+                        <input type="hidden" id="editSubjectId" name="subject_id" />
+                        <div class="mb-3">
+                            <label for="editGradeValue" class="form-label">Grade Value</label>
+<input type="text" class="form-control" id="editGradeValue" name="grade_value" placeholder="Enter grade value" />
+                        </div>
+                    <div class="mb-3">
+                        <label for="editSemester" class="form-label">Semester</label>
+                        <select class="form-select" id="editSemester" name="semester" required>
+                            <option value="" disabled>Select semester</option>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                        </select>
+                    </div>
+                    <!-- Year Level field remains commented out as before -->
+                    <!--------------- <div class="mb-3">
+                        <label for="editYearlevel" class="form-label">Year Level</label>
+                        <select class="form-select" id="editYearlevel" name="year_level" required>
+                            <option value="" disabled>Select year level</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>------->
+                    <div class="mb-3">
+                        <label for="editAcademicYear" class="form-label">Academic Year</label>
+                        <input type="text" class="form-control" id="editAcademicYear" name="academic_year" placeholder="Enter academic year" required />
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Grade</button>
+                    <!---<button type="button" class="btn btn-danger" id="deleteGradeBtn">Delete Grade</button>---->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Listen for changes on academic year input in edit-grade modal
+            $('#editAcademicYear').on('input', function() {
+                const newAcademicYear = $(this).val();
+                const studentId = $('#editStudentId').val();
+                const subjectId = $('#editSubjectId').val();
+
+                // Find the corresponding table row for this student and subject
+                const row = $(`tr[data-student-id="${studentId}"][data-subject-id="${subjectId}"]`);
+                if (row.length) {
+                    // Update the academic year cell (5th column) in the row
+                    row.find('td:nth-child(5)').text(newAcademicYear || '-');
+                }
+            });
+        });
+    </script>
+
+    <!-- Add Subject Modal -->
+    <div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addSubjectForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSubjectModalLabel">Add Subject</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="addSubjectStudentId" name="student_id" value="{{ student.id }}" />
+                       <!------ <div class="mb-3">
+                            <label for="addSubjectYearLevelSelect" class="form-label">Year Level</label>
+                            <select class="form-select" id="addSubjectYearLevelSelect" name="year_level" required>
+                                <option value="" disabled selected>Select Year Level</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>------>
+                        <div class="mb-3">
+                            <label for="addSubjectSemesterSelect" class="form-label">Semester</label>
+                            <select class="form-select" id="addSubjectSemesterSelect" name="semester" required>
+                                <option value="" disabled selected>Select Semester</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addNewSubjectSelect" class="form-label">Select Subject</label>
+                            {{ add_subject_form.new_subject }}
+                        </div>
+                        <div id="addSubjectError" class="text-danger"></div>
+                        <div id="addSubjectSuccess" class="text-success"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Subject</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+                        // Handle Add Subject button click
+                        $('.addSubjectBtn').click(function() {
+                            $('#addSubjectError').text('');
+                            $('#addSubjectSuccess').text('');
+                            $('#newSubjectSelect').val('');
+                            // Set year level and semester select inputs from button data attributes
+                            const yearLevel = $(this).data('year-level');
+                            const semester = $(this).data('semester');
+                            $('#addSubjectYearLevelSelect').val(yearLevel);
+                            $('#addSubjectSemesterSelect').val(semester);
+                            $('#addSubjectModal').modal('show');
+                        });
+
+                        // Handle Add Subject form submission
+                        $('#addSubjectForm').submit(function(e) {
+                            e.preventDefault();
+                            $('#addSubjectError').text('');
+                            $('#addSubjectSuccess').text('');
+
+                            const formData = $(this).serialize();
+
+                            $.ajax({
+                                url: "{% url 'add_student_subject_ajax' %}",
+                                type: "POST",
+                                data: formData,
+                                success: function(response) {
+                                    if (response.success) {
+                                        $('#addSubjectSuccess').text(response.message);
+
+                                        // Dynamically update the Grades table without reloading the page
+                                        const gradesTableBody = $('table.table tbody');
+
+                                        // Build new row HTML for the Grades table
+                                        const newGradeRow = `
+                                            <tr data-student-id="{{ student.id }}" data-subject-id="${response.new_subject_id}">
+                                                <td>${response.new_subject_name}</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-warning edit-grade-btn" 
+                                                            data-student-id="{{ student.id }}"
+                                                            data-subject-id="${response.new_subject_id}"
+                                                            data-current-grade="-"
+                                                            data-current-semester="-"
+                                                            data-current-year="-">
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `;
+
+                                        // Append the new row to the Grades table body
+                                        // Insert the new row in the correct year level and semester group in the Grades table
+                                        const yearLevel = response.year_level;
+                                        const semester = response.semester_offered.toLowerCase();
+
+                                        // Find the last row of the group for the year level and semester
+                                        let lastGroupRow = null;
+                                        $('table.table tbody tr').each(function() {
+                                            const row = $(this);
+                                            // Find the closest previous year level header row
+                                            const prevYearLevelHeader = row.prevAll('tr').filter(function() {
+                                                return $(this).text().trim().startsWith('Year Level:');
+                                            }).first();
+                                            const rowYearLevel = prevYearLevelHeader.length ? prevYearLevelHeader.text().replace('Year Level:', '').trim() : null;
+
+                                            // Find the closest previous semester header row
+                                            const prevSemesterHeader = row.prevAll('tr').filter(function() {
+                                                return $(this).text().trim().startsWith('Semester Offered:');
+                                            }).first();
+                                            const rowSemester = prevSemesterHeader.length ? prevSemesterHeader.text().replace('Semester Offered:', '').trim().toLowerCase() : null;
+
+                                            if (rowYearLevel === yearLevel && rowSemester === semester) {
+                                                lastGroupRow = row;
+                                            }
+                                        });
+
+                                        if (lastGroupRow) {
+                                            lastGroupRow.after(newGradeRow);
+                                        } else {
+                                            // If group not found, append at the end
+                                            $('table.table tbody').append(newGradeRow);
+                                        }
+
+                                        // Dynamically update the Subjects list in the correct year level and semester group
+                                        // Normalize semester to lowercase to match backend grouping keys
+                                        const normalizedSemester = semester.toLowerCase();
+                                        // Find the ul element for the year level and semester
+                                        const subjectListSelector = `ul.list-group[data-year-level="${yearLevel}"][data-semester="${normalizedSemester}"]`;
+                                        const subjectList = $(subjectListSelector);
+
+                                        if (subjectList.length > 0) {
+                                            // Build new subject list item HTML
+                                            const newSubjectItem = `
+                                                <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-subject-id="${response.new_subject_id}">
+                                                    <div>
+                                                        <h5 class="card-title">${response.new_subject_name}</h5>
+                                                        <p class="card-text">
+                                                            <strong>Code:</strong> ${response.subject_code}<br>
+                                                            <strong>Credits:</strong> ${response.credits}<br>
+                                                            <strong>Number of Hours:</strong> ${response.number_of_hours}<br>
+                                                            <strong>Status:</strong> ${response.status}
+                                                        </p>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-primary me-1 btn-change-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-old-subject-id="${response.new_subject_id}"
+                                                                data-old-subject-name="${response.new_subject_name}">
+                                                            Edit Subject
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger btn-remove-subject"
+                                                                data-student-id="{{ student.id }}"
+                                                                data-subject-id="${response.new_subject_id}"
+                                                                onclick="return confirm('Are you sure you want to remove this subject from the student?')">
+                                                            Remove Subject
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            `;
+                                            subjectList.append(newSubjectItem);
+                                        } else {
+                                            // If the ul element does not exist, do not create new group, just log warning
+                                            console.warn('Subject list for year level and semester not found. Subject not added to any group.');
+                                            // Optionally, show an error message to user here
+                                        }
+
+                                        // Close the modal after a short delay
+                                        setTimeout(function() {
+                                            $('#addSubjectModal').modal('hide');
+                                            $('#addSubjectSuccess').text('');
+                                        }, 1500);
+
+                                    } else {
+                                        $('#addSubjectError').text(response.error);
+                                    }
+                                },
+                                error: function() {
+                                    $('#addSubjectError').text('An error occurred while adding the subject.');
+                                }
+                            });
+                        });
+
+            // Handle Restore Subject button click
+            $('.btn-restore-subject').click(function() {
+                const studentId = $(this).data('student-id');
+                const subjectId = $(this).data('subject-id');
+
+                if (!confirm('Are you sure you want to restore this subject?')) {
+                    return;
+                }
+
+                $.ajax({
+                    url: "{% url 'restore_student_subject_ajax' %}",
+                    type: "POST",
+                    data: {
+                        'student_id': studentId,
+                        'subject_id': subjectId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while restoring the subject.');
+                    }
+                });
+            });
+
+            // Handle Delete Subject button click
+            $('.btn-delete-subject').click(function() {
+                const studentId = $(this).data('student-id');
+                const subjectId = $(this).data('subject-id');
+
+                if (!confirm('Are you sure you want to permanently delete this removed subject? This action cannot be undone.')) {
+                    return;
+                }
+
+                $.ajax({
+                    url: "{% url 'delete_removed_subject_ajax' %}",
+                    type: "POST",
+                    data: {
+                        'student_id': studentId,
+                        'subject_id': subjectId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while deleting the subject.');
+                    }
+                });
+            });
+        });
+    </script>
+
+ <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var carouselElement = document.getElementById('collegeCarousel');
+            var carousel = bootstrap.Carousel.getInstance(carouselElement);
+            if (!carousel) {
+                carousel = new bootstrap.Carousel(carouselElement);
+            }
+
+            var items = carouselElement.querySelectorAll('.carousel-item');
+            items.forEach(function (item) {
+                item.addEventListener('click', function (event) {
+                    var rect = item.getBoundingClientRect();
+                    var clickX = event.clientX - rect.left;
+                    var width = rect.width;
+                    if (clickX < width * 0.25) {
+                        carousel.prev();
+                    } else if (clickX > width * 0.75) {
+                        carousel.next();
+                    }
+                    // clicks in the middle 50% do nothing
+                });
+            });
+
+            // Hide the dropdown toggle button when dropdown menu is shown, show it when hidden
+            var dropdownElement = document.getElementById('navbarDropdown');
+            var dropdownMenu = dropdownElement.nextElementSibling;
+
+            dropdownMenu.addEventListener('show.bs.dropdown', function () {
+                dropdownElement.style.display = 'none';
+            });
+
+            dropdownMenu.addEventListener('hide.bs.dropdown', function () {
+                dropdownElement.style.display = 'inline-block';
+            });
+        });
+
+        // Scroll to top button functionality
+        var scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'flex';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+    <script src="{% static 'CS/sidebar-toggle-v2.js' %}"></script>
+</body>
+</html>

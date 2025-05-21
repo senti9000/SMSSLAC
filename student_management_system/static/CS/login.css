@@ -1,0 +1,35 @@
+.my-login-page {
+    background-image: url('/static/CS/BGG.jpg');
+    background-size: cover; /* Cover the entire area */
+    background-position: left; /* Center the image */
+    background-repeat: no-repeat;
+    height: 79vh;
+	margin-top: 5%;
+}
+
+.card-wrapper {
+    max-width: 400px; /* Set a max width for the card */
+    width: 100%; /* Make it responsive */
+	
+	
+}
+
+.card-body {
+    
+	justify-content:center ;
+	align-items:center;
+}
+
+.card.fat {
+    background: rgb(245, 245, 245);
+    border: 1px solid #000000;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(7, 95, 11);
+}
+
+@media (max-width: 800px) {
+    .my-login-page {
+        height: 100vh; /* Full height on smaller screens */
+        margin-top: 0; /* Remove top margin */
+    }
+}

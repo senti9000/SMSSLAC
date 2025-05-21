@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Louis Anne Colleges</title>
+    {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/Css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/responsive.css' %}">
+
+
+</head>
+
+<body>
+
+    <!-----sidebar------------->
+
+    <div class="wrapper">
+        <aside id="sidebar" class="js-sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <!----<a href="#"><h2>SLAC</h2></a>--->
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMScourse' %}" class="sidebar-link">
+                            <i class="fa-solid fa-note-sticky"></i>
+                            Add Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMS-course-save' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-note-sticky"></i>
+                            View Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSsubject' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-book"></i>
+                            Add Subject
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSsubjectsave' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-book"></i>
+                            View Subject
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'SMSstudent' %}" class="sidebar-link collapsed"
+                            aria-expanded="false"><i class="fa-solid fa-user-tie"></i>
+                            Add Student
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'add_student_save' %}" class="sidebar-link collapsed" 
+                            aria-expanded="false"><i class="fa-solid fa-user-tie"></i>
+                            View Student
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'admin:index' %}" class="sidebar-link">
+                           <i class="fa-solid fa-user-secret"></i>
+                            Admin
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#Setting" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>
+                            Setting
+                        </a>
+                        <ul id="Setting" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+
+                            <li class="sidebar-item">
+                                <div class="text-right mb-3">
+                                    <a href="{% url 'logout' %}" class="sidebar-link" aria-expanded="false">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!----------nav-------------->
+
+        <nav class="main">
+<nav class="navbar navbar-expand px-3 border-bottom justify-content-center fixed-top">
+    <button class="btn" id="sidebar-toggle" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+<div class="navbar-brand-text d-flex align-items-center gap-2 justify-content-center w-100">
+    <img src="{% static 'CS/BGBG2.jpeg' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+    <h1 class="m-0"> St. Louis Anne Colleges of San Pedro, Laguna</h1>
+</div>
+
+    <div class="navbar-collapse navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+            
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="container">
+    <h1>Add Course</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+    <form action="{% url 'SMS-course-save' %}" method="post">
+        {% csrf_token %}
+        <label for="course_id">Course ID:</label>
+<input type="text" id="course_id" name="course_id" required><br>
+
+<label for="course_name">Course Name:</label>
+<input type="text" id="course_name" name="course_name" required><br>
+
+<label for="credits">Credits:</label>
+<input type="text" id="credits" name="credits" required><br>
+
+<label for="department_name">Department Name:</label>
+<input type="text" id="department_name" name="department_name" required><br> 
+
+        <button class="tb" type="submit">Add Course</button>
+    </form>
+</div>
+
+            
+
+            
+        </nav>
+
+    
+
+    <script src="{% static 'CS/sidebar-toggle-v2.js' %}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var carouselElement = document.getElementById('collegeCarousel');
+            var carousel = bootstrap.Carousel.getInstance(carouselElement);
+            if (!carousel) {
+                carousel = new bootstrap.Carousel(carouselElement);
+            }
+
+            var items = carouselElement.querySelectorAll('.carousel-item');
+            items.forEach(function (item) {
+                item.addEventListener('click', function (event) {
+                    var rect = item.getBoundingClientRect();
+                    var clickX = event.clientX - rect.left;
+                    var width = rect.width;
+                    if (clickX < width * 0.25) {
+                        carousel.prev();
+                    } else if (clickX > width * 0.75) {
+                        carousel.next();
+                    }
+                    // clicks in the middle 50% do nothing
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+

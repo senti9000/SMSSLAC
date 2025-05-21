@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff Registration</title>
+   {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/regs.css' %}">
+    
+</head>
+<body>
+{% block content %}
+<div class="container">
+  <div class="card-wrapper card">
+    <div class="card-body">
+      <h2>Staff Registration</h2>
+      <form method="post" novalidate>
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+          <div class="form-group">
+              <label for="{{ form.username.id_for_label }}">Username:</label>
+              {{ form.username }}
+              {{ form.username.errors }}
+          </div>
+          <div class="form-group">
+              <label for="{{ form.email.id_for_label }}">Email:</label>
+              {{ form.email }}
+              {{ form.email.errors }}
+          </div>
+          <div class="form-group">
+              <label for="{{ form.password1.id_for_label }}">Password:</label>
+              {{ form.password1 }}
+              {{ form.password1.errors }}
+              <div class="password-strength-meter">
+                  <div class="strength-bar"></div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+              {{ form.password2 }}
+              {{ form.password2.errors }}
+              
+          </div>
+
+          <div class="form-group">
+            <label>
+                <input type="checkbox" id="showPassword"> Show passwords
+            </label>
+        </div>
+
+          <input type="submit" value="Register" class="submit-btn">
+            <a href="{% url 'login' %}" class="submit-btn-link">
+                <input type="button" value="Already have an account" class="submit-btn">
+          
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Show/hide password functionality
+      const showPasswordCheckbox = document.getElementById('showPassword');
+      const passwordInput = document.querySelector('input[name="password1"]');
+      const passwordConfirmInput = document.querySelector('input[name="password2"]');
+      
+      showPasswordCheckbox.addEventListener('change', function() {
+          const type = this.checked ? 'text' : 'password';
+          passwordInput.type = type;
+          passwordConfirmInput.type = type;
+      });
+  
+      // Password strength meter
+      passwordInput.addEventListener('input', function() {
+          const strengthBar = document.querySelector('.strength-bar');
+          const password = this.value;
+          let strength = 0;
+          
+          // Length check
+          if (password.length >= 8) strength += 1;
+          if (password.length >= 12) strength += 1;
+          
+          // Complexity checks
+          if (/[A-Z]/.test(password)) strength += 1;
+          if (/[0-9]/.test(password)) strength += 1;
+          if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+          
+          // Update strength bar
+          const width = (strength / 5) * 100;
+          let color = '#dc3545'; // red
+          if (strength >= 3) color = '#ffc107'; // yellow
+          if (strength >= 4) color = '#28a745'; // green
+          
+          strengthBar.style.width = `${width}%`;
+          strengthBar.style.backgroundColor = color;
+      });
+  });
+  </script>
+
+</body>
+</html>

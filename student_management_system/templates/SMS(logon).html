@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>SLAC Login</title>
+    {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'CS/Login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/responsive.css' %}">
+</head>
+
+<body class="my-login-page">
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-6 col-lg-4"> <!-- Responsive column -->
+                    <div class="card fat">
+                        <div class="card-body">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-info">{{ message }}</div>
+                                    
+                                {% endfor %}
+                            {% endif %}
+                            <h4 class="card-title text-center">Login</h4>
+                            {% if user.is_authenticated %}
+                                <!-- Additional content for authenticated users can go here -->
+                            {% endif %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="showPassword"> Show passwords
+                                    </label>
+                                </div>
+                                
+                                
+                                <div class="form-group m-0">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Login
+                                    </button>
+                                    <div class="text-center mt-2">
+                                    <a href="{% url 'password_reset' %}" class="text-danger">forgot password?</a>
+                                </div>
+                                <hr class="separator-line">
+                                    <div class="text-center mt-3">
+<a href="{% url 'background_template' %}" class="text-primary">Create an account</a>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide password functionality
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.querySelector('input[name="password"]');
+            
+            showPasswordCheckbox.addEventListener('change', function() {
+                const type = this.checked ? 'text' : 'password';
+                passwordInput.type = type;
+            });
+        
+            // Password strength meter
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const strengthBar = document.querySelector('.strength-bar');
+                    const password = this.value;
+                    let strength = 0;
+                    
+                    // Length check
+                    if (password.length >= 8) strength += 1;
+                    if (password.length >= 12) strength += 1;
+                    
+                    // Complexity checks
+                    if (/[A-Z]/.test(password)) strength += 1;
+                    if (/[0-9]/.test(password)) strength += 1;
+                    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                    
+                    // Update strength bar
+                    const width = (strength / 5) * 100;
+                    let color = '#dc3545'; // red
+                    if (strength >= 3) color = '#ffc107'; // yellow
+                    if (strength >= 4) color = '#28a745'; // green
+                    
+                    strengthBar.style.width = `${width}%`;
+                    strengthBar.style.backgroundColor = color;
+                });
+            }
+        });
+        </script>
+
+</body>
+</html>
+
+
+
+
+<!----------
+
+# Sample nginx configuration for SSL termination and proxying to Django
+
+server {
+    listen 80;
+    server_name SLAC.com www.SLAC.com;
+
+    # Redirect all HTTP requests to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name SLAC.com www.SLAC.com;
+
+    ssl_certificate /etc/letsencrypt/live/SLAC.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/SLAC.com/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location /static/ {
+        alias /path/to/your/project/staticfiles/;
+    }
+
+    location /media/ {
+        alias /path/to/your/project/media/;
+    }
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass http://127.0.0.1:8000;  # Assuming Django runs on port 8000
+    }
+}
+
+
+
+
+-->

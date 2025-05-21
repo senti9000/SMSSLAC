@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAC Enrollment Form</title>
+    {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'CS/BGBG2.jpeg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'CS/regs.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>St. Louis Anne Colleges of San Pedro, Laguna Inc.</h1>
+        <h2>ENROLLMENT FORM</h2>
+        <h3>COLLEGE DEPARTMENT</h3>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" id="registrationForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- User Account Information -->
+            <h4>ACCOUNT INFORMATION</h4>
+            <div class="form-group">
+                {{ user_form.username.label_tag }}
+                {{ user_form.username }}
+                {% if user_form.username.errors %}
+                    <div class="error">{{ user_form.username.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ user_form.email.label_tag }}
+                {{ user_form.email }}
+                {% if user_form.email.errors %}
+                    <div class="error">{{ user_form.email.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ user_form.password1.label_tag }}
+                {{ user_form.password1 }}
+                <div class="password-strength-meter">
+                    <div class="strength-bar"></div>
+                </div>
+                {% if user_form.password1.errors %}
+                    <div class="error">{{ user_form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ user_form.password2.label_tag }}
+                {{ user_form.password2 }}
+                {% if user_form.password2.errors %}
+                    <div class="error">{{ user_form.password2.errors }}</div>
+                {% endif %}
+                <small class="help-text">{{ user_form.password2.help_text }}</small>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showPassword"> Show passwords
+                </label>
+            </div>
+
+            <!-- Student Profile Information -->
+            <h4>PERSONAL INFORMATION</h4>
+            <div class="form-group">
+                {{ profile_form.first_name.label_tag }}
+                {{ profile_form.first_name }}
+                {% if profile_form.first_name.errors %}
+                    <div class="error">{{ profile_form.first_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.middle_Name.label_tag }}
+                {{ profile_form.middle_Name }}
+                {% if profile_form.middle_Name.errors %}
+                    <div class="error">{{ profile_form.middle_Name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.last_name.label_tag }}
+                {{ profile_form.last_name }}
+                {% if profile_form.last_name.errors %}
+                    <div class="error">{{ profile_form.last_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.date_of_birth.label_tag }}
+                {{ profile_form.date_of_birth }}
+                {% if profile_form.date_of_birth.errors %}
+                    <div class="error">{{ profile_form.date_of_birth.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.gender.label_tag }}
+                {{ profile_form.gender }}
+                {% if profile_form.gender.errors %}
+                    <div class="error">{{ profile_form.gender.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.address.label_tag }}
+                {{ profile_form.address }}
+                {% if profile_form.address.errors %}
+                    <div class="error">{{ profile_form.address.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.phone.label_tag }}
+                {{ profile_form.phone }}
+                {% if profile_form.phone.errors %}
+                    <div class="error">{{ profile_form.phone.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.academic_year.label_tag }}
+                {{ profile_form.academic_year }}
+                {% if profile_form.academic_year.errors %}
+                    <div class="error">{{ profile_form.academic_year.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.semester.label_tag }}
+                {{ profile_form.semester }}
+                {% if profile_form.semester.errors %}
+                    <div class="error">{{ profile_form.semester.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.course.label_tag }}
+                {{ profile_form.course }}
+                {% if profile_form.course.errors %}
+                    <div class="error">{{ profile_form.course.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.year_level.label_tag }}
+                {{ profile_form.year_level }}
+                {% if profile_form.year_level.errors %}
+                    <div class="error">{{ profile_form.year_level.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.department_name.label_tag }}
+                {{ profile_form.department_name }}
+                {% if profile_form.department_name.errors %}
+                    <div class="error">{{ profile_form.department_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <h4>BACKGROUND INFORMATION</h4>
+            <div class="form-group">
+                {{ profile_form.place_of_birth.label_tag }}
+                {{ profile_form.place_of_birth }}
+                {% if profile_form.place_of_birth.errors %}
+                    <div class="error">{{ profile_form.place_of_birth.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.citizenship.label_tag }}
+                {{ profile_form.citizenship }}
+                {% if profile_form.citizenship.errors %}
+                    <div class="error">{{ profile_form.citizenship.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.father_name.label_tag }}
+                {{ profile_form.father_name }}
+                {% if profile_form.father_name.errors %}
+                    <div class="error">{{ profile_form.father_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.mother_name.label_tag }}
+                {{ profile_form.mother_name }}
+                {% if profile_form.mother_name.errors %}
+                    <div class="error">{{ profile_form.mother_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.guardian_contact_number.label_tag }}
+                {{ profile_form.guardian_contact_number }}
+                {% if profile_form.guardian_contact_number.errors %}
+                    <div class="error">{{ profile_form.guardian_contact_number.errors }}</div>
+                {% endif %}
+            </div>
+
+            <h4>EDUCATION HISTORY</h4>
+            <div class="form-group">
+                {{ profile_form.elementary_name_year_graduated.label_tag }}
+                {{ profile_form.elementary_name_year_graduated }}
+                {% if profile_form.elementary_name_year_graduated.errors %}
+                    <div class="error">{{ profile_form.elementary_name_year_graduated.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.junior_high_name_year_graduated.label_tag }}
+                {{ profile_form.junior_high_name_year_graduated }}
+                {% if profile_form.junior_high_name_year_graduated.errors %}
+                    <div class="error">{{ profile_form.junior_high_name_year_graduated.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ profile_form.senior_high_name_year_graduated.label_tag }}
+                {{ profile_form.senior_high_name_year_graduated }}
+                {% if profile_form.senior_high_name_year_graduated.errors %}
+                    <div class="error">{{ profile_form.senior_high_name_year_graduated.errors }}</div>
+                {% endif %}
+            </div>
+            
+            
+            <input type="submit" value="Register" class="submit-btn">
+            <a href="{% url 'login' %}" class="submit-btn-link">
+                <input type="button" value="Already have an account" class="submit-btn">
+            </a>
+        </form>
+    </div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Show/hide password functionality
+    const showPasswordCheckbox = document.getElementById('showPassword');
+    const passwordInput = document.querySelector('input[name="password1"]');
+    const passwordConfirmInput = document.querySelector('input[name="password2"]');
+    
+    showPasswordCheckbox.addEventListener('change', function() {
+        const type = this.checked ? 'text' : 'password';
+        passwordInput.type = type;
+        passwordConfirmInput.type = type;
+    });
+
+    // Password strength meter
+    passwordInput.addEventListener('input', function() {
+        const strengthBar = document.querySelector('.strength-bar');
+        const password = this.value;
+        let strength = 0;
+        
+        // Length check
+        if (password.length >= 8) strength += 1;
+        if (password.length >= 12) strength += 1;
+        
+        // Complexity checks
+        if (/[A-Z]/.test(password)) strength += 1;
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+        
+        // Update strength bar
+        const width = (strength / 5) * 100;
+        let color = '#dc3545'; // red
+        if (strength >= 3) color = '#ffc107'; // yellow
+        if (strength >= 4) color = '#28a745'; // green
+        
+        strengthBar.style.width = `${width}%`;
+        strengthBar.style.backgroundColor = color;
+    });
+});
+</script>
+</html>
