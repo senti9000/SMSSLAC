@@ -1,1 +1,1 @@
-<a href="SMS(logon).html" class="text-danger">Click?</a>
+<a href="SMS.html" >Home</a>
